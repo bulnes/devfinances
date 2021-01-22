@@ -7,16 +7,36 @@
   padding: 0;
 }
 
+html {
+  font-size: 93.75%;
+}
+
 body {
   background: #f0f2f5;
   font-family: 'Poppins', sans-serif;
   font-size: 100%;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .container {
   width: min(90vw, 800px);
   margin: auto;
 }
+
+
+
+
 
 h2 {
   margin-top: 3.2rem;
@@ -25,6 +45,19 @@ h2 {
   font-weight: 400;
 }
 
+
+
+a {
+  color: #49aa26;
+  text-decoration: none;
+}
+  a:hover {
+    color: #3dd705;
+  }
+  a.button.new {
+    display: inline-block;
+    margin-bottom: .8rem;
+  }
 
 
 
@@ -60,6 +93,9 @@ header {
   .card h3 {
     font-weight: 400;
     font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .card p {
     font-size: 2rem;
@@ -77,10 +113,17 @@ header {
   color: #969cb3;
   width: 100%;
   border-spacing: 0 .5rem;
+
+  display: block;
+  overflow-x: auto;
 }
   #data-table thead th:first-child,
   #data-table tbody td:first-child {
     border-radius: .25rem 0 0 .25rem;
+  }
+  #data-table thead th:last-child,
+  #data-table tbody td:last-child {
+    border-radius: 0 .25rem .25rem 0;
   }
   #data-table tbody tr {
     opacity: .7;
@@ -116,4 +159,23 @@ footer {
   padding: 4rem 0 2rem;
   color: var(--dark-blue);
   opacity: .6;
+}
+
+
+@media (min-width: 800px) {
+  html {
+    font-size: 87.5%;
+  }
+
+  #balance {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  #data-table {
+    display: table;
+    overflow-x: unset;
+  }
 }
