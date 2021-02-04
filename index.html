@@ -60,9 +60,9 @@
       <table id="data-table">
         <thead>
           <tr>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Data</th>
+            <th onclick="DOM.orderTable(this, Transaction.getOrderTypes().DESCRIPTION)">Descrição</th>
+            <th onclick="DOM.orderTable(this, Transaction.getOrderTypes().AMOUNT)">Valor</th>
+            <th class="orderby" onclick="DOM.orderTable(this, Transaction.getOrderTypes().DATE)">Data</th>
             <th></th>
           </tr>
         </thead>

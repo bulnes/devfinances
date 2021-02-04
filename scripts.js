@@ -101,6 +101,38 @@ const Storage = {
 const Transaction = {
   all: Storage.get(),
 
+  getOrderTypes() {
+    return {
+      DESCRIPTION: 'description',
+      AMOUNT: 'amount',
+      DATE: 'date'
+    };
+  },
+
+  orderBy(type = Transaction.getOrderTypes().DATE) {
+    
+    return Transaction.all.sort((a, b) => {
+
+      if (type === Transaction.getOrderTypes().DATE) {
+        const dateA = Utils.formatDateToNumber(a.date);
+        const dateB = Utils.formatDateToNumber(b.date);
+
+        return dateA > dateB ? -1 : (dateA < dateB ? 1 : 0);
+      }
+
+      if (type === Transaction.getOrderTypes().DESCRIPTION) {
+        const descA = a.description.toLowerCase();
+        const descB = b.description.toLowerCase();
+
+        return descA < descB ? -1 : (descA > descB ? 1 : 0);
+      }
+
+      if (type === Transaction.getOrderTypes().AMOUNT) {
+        return b.amount - a.amount;
+      }
+    });
+  },
+
   add(transaction) {
     Transaction.all.push(transaction);
     App.reload();
@@ -144,6 +176,7 @@ const Transaction = {
 };
 
 const DOM = {
+  transactionsHeader: document.querySelector('#data-table thead'),
   transactionsContainer: document.querySelector('#data-table tbody'),
 
   addTransaction(transaction, index) {
@@ -190,9 +223,22 @@ const DOM = {
   clearTransactions() {
     DOM.transactionsContainer.innerHTML = null;
   },
+
+  orderTable(event, type) {
+    const orderClass = 'orderby';
+
+    this.transactionsHeader.querySelectorAll('th').forEach(th => th.classList.remove(orderClass));
+    event.classList.add(orderClass);
+
+    App.reload(type);
+  },
 };
 
 const Utils = {
+
+  formatDateToNumber(date) {
+    return Number(date.split('/').reverse().join(''));
+  },
 
   formatDate(date) {
     return date.split('-').reverse().join('/');
@@ -220,15 +266,15 @@ const Utils = {
 
 const App = {
 
-  init() {
-    Transaction.all.forEach(DOM.addTransaction);
+  init(orderBy) {
+    Transaction.orderBy(orderBy).forEach(DOM.addTransaction);
     DOM.updateBalance();
     Storage.set(Transaction.all);
   },
 
-  reload() {
+  reload(orderBy) {
     DOM.clearTransactions();
-    App.init();
+    App.init(orderBy);
   },
 };
 

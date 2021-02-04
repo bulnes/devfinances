@@ -178,7 +178,14 @@ header {
     font-weight: 400;
     padding: 1rem 2rem;
     text-align: left;
+    cursor: pointer;
   }
+  #data-table th.orderby {
+    font-weight: 700;
+  }
+    #data-table th.orderby::after {
+      content: '⬆';
+    }
   #data-table td {
     background: #fff;
     padding: 1rem 2rem;
